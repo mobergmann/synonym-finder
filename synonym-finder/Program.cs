@@ -55,17 +55,31 @@ namespace synonym_finder
                     Console.WriteLine($"{ i }: { ReduceString(collection_list[i].InnerText) }");
                 }
 
-                // as long as the user doesn't input a valid number, ask him to do so
                 string userChoiceNotParsed = String.Empty;
-                while (!Int32.TryParse(userChoiceNotParsed, out int number))
-                {
+                int userChoice;
+
+                // as long as the user doesn't input a valid number, ask him to do so
+                REPEAT: {
                     Console.Write("Wälen sie einen Eintrag durch seine entsprechende Nummer: ");
                     userChoiceNotParsed = Console.ReadLine();
                     Console.WriteLine();
-                }
 
-                // parse the user input
-                int userChoice = Int32.Parse(userChoiceNotParsed);
+                    // check if input is a number
+                    if (!Int32.TryParse(userChoiceNotParsed, out int number))
+                    {
+                        Console.WriteLine("Bitte geben sie eine echte Ganzzahlige Zahl an.");
+                        goto REPEAT;
+                    }
+
+                    userChoice = Int32.Parse(userChoiceNotParsed);
+                
+                    // check if Choice is in bounds of available options
+                    if (userChoice > collection_list.Count || userChoice < 0)
+                    {
+                        Console.WriteLine("Bitte geben sie eine Zahl an, welche auch repräsentiert ist.");
+                        goto REPEAT;
+                    }
+                }
 
                 // get the html document of the given text
                 doc = GetDoc(url_get + ReduceString(collection_list[userChoice].InnerText));
@@ -92,6 +106,10 @@ namespace synonym_finder
                 }
             }
             Console.WriteLine();
+
+            // ask if the programm sould be closed
+            Console.WriteLine("Drücken sie eine beliebige Taste um das Programm zu beenden.");
+            Console.ReadKey();
         }
 
         /// <summary>
