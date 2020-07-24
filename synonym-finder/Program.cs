@@ -83,11 +83,15 @@ namespace synonym_finder
 
             // print all synonyms for the given word
             Console.WriteLine("Folgende Synonyme wurden gefunden:");
-            foreach (HtmlNode node in collection)
+            for (int i = 0; i < collection.Count; i++)
             {
-                Console.Write(node.InnerText + ", ");
+                Console.Write(collection[i].InnerText + ", ");
+                if (i == collection.Count - 1)
+                {
+                    Console.Write(", ");
+                }
             }
-
+            Console.WriteLine();
         }
 
         /// <summary>
