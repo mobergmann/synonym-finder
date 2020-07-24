@@ -85,8 +85,8 @@ namespace synonym_finder
             Console.WriteLine("Folgende Synonyme wurden gefunden:");
             for (int i = 0; i < collection.Count; i++)
             {
-                Console.Write(collection[i].InnerText + ", ");
-                if (i == collection.Count - 1)
+                Console.Write(collection[i].InnerText);
+                if (i < collection.Count - 1)
                 {
                     Console.Write(", ");
                 }
