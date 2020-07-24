@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30309.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "synonym-finder", "synonym-finder\synonym-finder.csproj", "{E200E206-BD90-45D8-9C8F-6055BF3F80B3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E200E206-BD90-45D8-9C8F-6055BF3F80B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E200E206-BD90-45D8-9C8F-6055BF3F80B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E200E206-BD90-45D8-9C8F-6055BF3F80B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E200E206-BD90-45D8-9C8F-6055BF3F80B3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C020E234-7996-4199-92BD-B98296FAABA2}
+	EndGlobalSection
+EndGlobal
