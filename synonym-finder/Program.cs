@@ -42,6 +42,10 @@ namespace synonym_finder
                 if (collection_list == null)
                 {
                     Console.WriteLine("Ihr Wort exisitiert nicht im Duden.");
+
+                    // ask if the programm sould be closed
+                    Console.WriteLine("Drücken sie eine beliebige Taste um das Programm zu beenden.");
+                    Console.ReadKey();
                     return;
                 }
 
@@ -92,6 +96,10 @@ namespace synonym_finder
             if (collection == null)
             {
                 Console.WriteLine("Keine Synonyme gefunden.");
+
+                // ask if the programm sould be closed
+                Console.WriteLine("Drücken sie eine beliebige Taste um das Programm zu beenden.");
+                Console.ReadKey();
                 return;
             }
 
@@ -126,6 +134,10 @@ namespace synonym_finder
             if (doc == null)
             {
                 Console.WriteLine("Duden konnte nicht erreicht werden. Bitte überprüfen sie ihre Internetverbindung.");
+
+                // ask if the programm sould be closed
+                Console.WriteLine("Drücken sie eine beliebige Taste um das Programm zu beenden.");
+                Console.ReadKey();
                 System.Environment.Exit(1);
             }
 
