@@ -10,6 +10,8 @@ Diese Applikation benutzt die Duden Website, um Synonyme zu einem gegebenen Wort
 Achten sie bitte darauf, dass dies ein Bildungsprojekt ist und zur Verdeutlichung dient, wie man die Duden Website benutzen kann, um Synonyme zu suchen.
 
 # Demo Video
+[![Demo](https://raw.githubusercontent.com/mobergmann/synonym-finder/master/docs/Thumbnail.png)](https://raw.githubusercontent.com/mobergmann/synonym-finder/master/docs/synonym-finder-demo.webm)
+
 Klicken sie [hier](https://raw.githubusercontent.com/mobergmann/synonym-finder/master/docs/synonym-finder-demo.webm) um das Demo Video zu öffnen.
 
 # Features
