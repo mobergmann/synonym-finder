@@ -24,11 +24,11 @@ Klicken sie [hier](https://raw.githubusercontent.com/mobergmann/synonym-finder/m
 ## Voraussetzungen
 Installieren sie die folgende Abhängigkeit für ihr Betriebssystem, oder stellen sie sicher, das sie die Anhängigkeit installiert haben.
 
-Min. Version | OS     | Link
+Min. Version | OS | Link
 -------     | ------- | ----
-| 3.1       | Windows | [.NET Core Runntime](https://dotnet.microsoft.com/download/dotnet-core/current/runtime) |
-| 6.10.0    | Linux   | [Mono](https://www.mono-project.com/download/stable/#download-lin) |
-| 6.10.0    | Mac     | [Mono](https://www.mono-project.com/download/stable/#download-mac) |
+3.1 | Windows | [.NET Core Runntime](https://dotnet.microsoft.com/download/dotnet-core/current/runtime)
+6.10.0 | Linux | [Mono](https://www.mono-project.com/download/stable/#download-lin)
+6.10.0 | Mac | [Mono](https://www.mono-project.com/download/stable/#download-mac)
 
 ## Download
 1. Besuchen sie die [Release Seite](https://github.com/mobergmann/synonym-finder/releases), und suchen sie den gewünschten Release
