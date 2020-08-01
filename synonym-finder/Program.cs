@@ -1,15 +1,31 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using HtmlAgilityPack;
 
 namespace synonym_finder
 {
+
+    /// <summary>
+    /// A set of all symbold in the german alphabet.
+    /// </summary>
+    struct SearchResult
+    {
+        public string word;
+        public string link;
+    }
+
     class Program
     {
         /// <summary>
         /// A set of all symbold in the german alphabet.
         /// </summary>
         private static char[] germanAlphabet = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','ä','ö','ü'};
+
+        /// <summary>
+        /// The base URL, which opens a page of a appended word.
+        /// </summary>
+        private static readonly string url_base = @"https://www.duden.de";        
 
         /// <summary>
         /// The base URL, which opens a page of a appended word.
@@ -85,12 +101,20 @@ namespace synonym_finder
                     // make a duden search
                     doc = GetDoc(url_search + input);
 
-                    // get all search results
-                    HtmlNodeCollection collection_list = doc.DocumentNode.SelectNodes("//section[@class='vignette']/h2/a/strong");
+                    #region handle search results
 
-                    // if no results were found stop the programm
-                    if (collection_list == null)
+                    // holds all search results
+                    List<SearchResult> searchResults = new List<SearchResult>();
+
+                    // get all search results
+                    // HtmlNodeCollection collection_list = doc.DocumentNode.SelectNodes("//section[@class='vignette']/h2/a/strong");
+
+                    HtmlNodeCollection tmp_collection_1 = doc.DocumentNode.SelectNodes("//section[@class='vignette']/h2/a");
+
+                    // if no results were found ask for new word
+                    if (tmp_collection_1 == null)
                     {
+                        // inform user
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine($"\"{input}\" ist nicht im Duden verzeichnet.");
                         Console.ResetColor();
@@ -99,25 +123,47 @@ namespace synonym_finder
                         Console.WriteLine();
                         continue;
                     }
+                    
+                    // extract search results
+                    foreach (HtmlNode node in tmp_collection_1)
+                    {
+                        SearchResult result = new SearchResult
+                        {
+                            word = node.ChildNodes[1].InnerText, // get second child of the a tag (which is the <strong>), which holds the name of the word
+                            link = url_base + node.GetAttributeValue("href", string.Empty)
+                        };
+
+                        searchResults.Add(result);
+                    }
+
+                    #endregion
+
+                    #region print search results
 
                     // inform the user
                     Console.WriteLine($"\"{input}\" wurde nicht gefunden, meinten sie: ");
 
                     // print the search results with an integer for selection
-                    for (int i = 0; i < collection_list.Count; i++)
+                    for (int i = 0; i < searchResults.Count; i++)
                     {
-                        Console.WriteLine($"{ i }: { ReduceString(collection_list[i].InnerText) }");
+                        Console.WriteLine($"{ i }: { ReduceString(searchResults[i].word) }");
                     }
+
+                    // choose no word
                     Console.ForegroundColor = ConsoleColor.DarkYellow;
-                    Console.WriteLine($"{collection_list.Count}: Keine Eingabe");
+                    Console.WriteLine($"{tmp_collection_1.Count}: Keine Eingabe");
                     Console.ResetColor();
+
+                    #endregion
+
+                    #region get user choice
 
                     string userChoiceNotParsed = String.Empty;
                     int userChoice;
 
                     Console.Write("Wählen sie einen Eintrag durch seine entsprechende Nummer: ");
-                // as long as the user doesn't input a valid number, ask him to do so
-                REPEAT:
+                    // as long as the user doesn't input a valid number, ask him to do so
+                    REPEAT:
                     {
                         userChoiceNotParsed = Console.ReadLine();
                         Console.WriteLine();
@@ -135,7 +181,7 @@ namespace synonym_finder
                         userChoice = Int32.Parse(userChoiceNotParsed);
 
                         // check if Choice is in bounds of available options
-                        if (userChoice > collection_list.Count || userChoice < 0)
+                        if (userChoice > tmp_collection_1.Count || userChoice < 0)
                         {
                             Console.ForegroundColor = ConsoleColor.DarkYellow;
                             Console.WriteLine("Bitte geben sie eine Zahl an, welche auch repräsentiert ist.");
@@ -145,7 +191,7 @@ namespace synonym_finder
                         }
                     }
 
-                    if (userChoice == collection_list.Count)
+                    if (userChoice == tmp_collection_1.Count)
                     {
                         // print an empty Line
                         Console.WriteLine();
@@ -154,8 +200,10 @@ namespace synonym_finder
                     else
                     {
                         // get the html document of the given text
-                        doc = GetDoc(url_get + ReduceString(collection_list[userChoice].InnerText));
+                        doc = GetDoc(url_get + ReduceString(tmp_collection_1[userChoice].InnerText));
                     }
+
+                    #endregion
                 }
 
                 // get all synonyms
