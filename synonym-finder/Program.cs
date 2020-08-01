@@ -109,10 +109,10 @@ namespace synonym_finder
                     // get all search results
                     // HtmlNodeCollection collection_list = doc.DocumentNode.SelectNodes("//section[@class='vignette']/h2/a/strong");
 
-                    HtmlNodeCollection tmp_collection_1 = doc.DocumentNode.SelectNodes("//section[@class='vignette']/h2/a");
+                    HtmlNodeCollection tmp_collection = doc.DocumentNode.SelectNodes("//section[@class='vignette']/h2/a");
 
                     // if no results were found ask for new word
-                    if (tmp_collection_1 == null)
+                    if (tmp_collection == null)
                     {
                         // inform user
                         Console.ForegroundColor = ConsoleColor.Red;
@@ -125,7 +125,7 @@ namespace synonym_finder
                     }
                     
                     // extract search results
-                    foreach (HtmlNode node in tmp_collection_1)
+                    foreach (HtmlNode node in tmp_collection)
                     {
                         SearchResult result = new SearchResult
                         {
@@ -146,12 +146,12 @@ namespace synonym_finder
                     // print the search results with an integer for selection
                     for (int i = 0; i < searchResults.Count; i++)
                     {
-                        Console.WriteLine($"{ i }: { ReduceString(searchResults[i].word) }");
+                        Console.WriteLine($"{i}: {searchResults[i].word}");
                     }
 
                     // choose no word
                     Console.ForegroundColor = ConsoleColor.DarkYellow;
-                    Console.WriteLine($"{tmp_collection_1.Count}: Keine Eingabe");
+                    Console.WriteLine($"{tmp_collection.Count}: Keine Eingabe");
                     Console.ResetColor();
 
                     #endregion
@@ -166,7 +166,6 @@ namespace synonym_finder
                     REPEAT:
                     {
                         userChoiceNotParsed = Console.ReadLine();
-                        Console.WriteLine();
 
                         // check if input is a number
                         if (!Int32.TryParse(userChoiceNotParsed, out int number))
@@ -181,7 +180,7 @@ namespace synonym_finder
                         userChoice = Int32.Parse(userChoiceNotParsed);
 
                         // check if Choice is in bounds of available options
-                        if (userChoice > tmp_collection_1.Count || userChoice < 0)
+                        if (userChoice > tmp_collection.Count || userChoice < 0)
                         {
                             Console.ForegroundColor = ConsoleColor.DarkYellow;
                             Console.WriteLine("Bitte geben sie eine Zahl an, welche auch repräsentiert ist.");
@@ -191,7 +190,7 @@ namespace synonym_finder
                         }
                     }
 
-                    if (userChoice == tmp_collection_1.Count)
+                    if (userChoice == tmp_collection.Count)
                     {
                         // print an empty Line
                         Console.WriteLine();
@@ -200,7 +199,7 @@ namespace synonym_finder
                     else
                     {
                         // get the html document of the given text
-                        doc = GetDoc(url_get + ReduceString(tmp_collection_1[userChoice].InnerText));
+                        doc = GetDoc(searchResults[userChoice].link);
                     }
 
                     #endregion
@@ -239,7 +238,7 @@ namespace synonym_finder
                 Console.WriteLine();
                 continue;
             }
-            while (true);             // if something else than y
+            while (true);
         }
 
         /// <summary>
