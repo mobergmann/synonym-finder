@@ -9,33 +9,69 @@ namespace synonym_finder
         /// <summary>
         /// A set of all symbold in the german alphabet.
         /// </summary>
-        // private static char[] germanAlphabet = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','ä','ö','ü'};
+        private static char[] germanAlphabet = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','ä','ö','ü'};
 
+        /// <summary>
+        /// The base URL, which opens a page of a appended word.
+        /// </summary>
         private static readonly string url_get = @"https://www.duden.de/rechtschreibung/";
+        
+        /// <summary>
+        /// The base URL, which searches for a appended word.
+        /// </summary>
         private static readonly string url_search = @"https://www.duden.de/suchen/dudenonline/";
         
         static void Main(string[] args)
         {
-            ConsoleKeyInfo runAntotherTime;
             do
             {
-                // get user input
-                Console.Write("Wort: ");
+                #region User Input
+
+                Console.Write("Geben sie ein Word ein (");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write("esc");
+                Console.ResetColor();
+                Console.Write(" zum beenden): ");
+
+                string input = string.Empty;
+
+                // get the first pressed key
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                string input = Console.ReadLine();
+                ConsoleKeyInfo key = Console.ReadKey();
                 Console.ResetColor();
 
-                // check if input is valid
-                while (!IsValidString(input))
+                // when esc key has been pressed, then end the programm
+                if (key.Key == ConsoleKey.Escape)
+                {
+                    return;
+                }
+                // if key wasn't a german key, then repeat process
+                else if (!isInGermanAlphabet(key.KeyChar))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine($"\"{input}\" ist keine gültige Eingabe. Bitte wiederholen die die Eingabe.");
                     Console.ResetColor();
-
-                    Console.Write("Wort: ");
-                    input = Console.ReadLine();
-                    Console.WriteLine();
+                    continue;
                 }
+                // a valid key has been pressed, so add the pressed key to the input string
+                else
+                {
+                    input += key.KeyChar;
+                }
+
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                input += Console.ReadLine();
+                Console.ResetColor();
+
+                if (!IsValidInput(input))
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"\"{input}\" ist keine gültige Eingabe. Bitte wiederholen die die Eingabe."); 
+                    Console.ResetColor();
+                    continue;
+                }
+
+                #endregion
 
                 // feedback from Programm
                 Console.WriteLine("Suche...");
@@ -59,7 +95,9 @@ namespace synonym_finder
                         Console.WriteLine($"\"{input}\" ist nicht im Duden verzeichnet.");
                         Console.ResetColor();
 
-                        goto APP_END;
+                        // print an empty Line
+                        Console.WriteLine();
+                        continue;
                     }
 
                     // inform the user
@@ -109,7 +147,9 @@ namespace synonym_finder
 
                     if (userChoice == collection_list.Count)
                     {
-                        goto APP_END;
+                        // print an empty Line
+                        Console.WriteLine();
+                        continue;
                     }
                     else
                     {
@@ -128,7 +168,9 @@ namespace synonym_finder
                     Console.WriteLine($"Für \"{input}\" sind keine Synonyme im Duden verzeichnet.");
                     Console.ResetColor();
 
-                    goto APP_END;
+                    // print an empty Line
+                    Console.WriteLine();
+                    continue;
                 }
 
                 // print all synonyms for the given word
@@ -143,21 +185,14 @@ namespace synonym_finder
                         Console.Write(", ");
                     }
                 }
+
+                // print an empty Line
                 Console.WriteLine();
-
-
-            APP_END:
-                // ask if the programm sould be closed
-                Console.Write("Möchten sie ein weiteres Wort suchen? [Y/n] ");
-                runAntotherTime = Console.ReadKey();
-                Console.WriteLine("\n");
-
+                Console.WriteLine();
+                continue;
             }
-            while (runAntotherTime.Key.Equals(ConsoleKey.Enter) ||  // if Enter
-                !runAntotherTime.Key.Equals(ConsoleKey.N));             // if something else than y
+            while (true);             // if something else than y
         }
-
-
 
         /// <summary>
         /// returns the html document of the given url
@@ -220,15 +255,22 @@ namespace synonym_finder
         }
 
         /// <summary>
-        /// checks each characgter of the given string, if it is in the given bounds.
+        /// checks if each characgter of the given string, is in a defined bound.
         /// </summary>
-        /// <param name="input"></param>
+        /// <param name="input">the string which should be checked</param>
         /// <returns></returns>
-        private static bool IsValidString(string input)
+        private static bool IsValidInput(string input)
         {
+            // check string length
+            if (input.Length <= 0)
+            {
+                return false;
+            }
+
+            // check each character of the given Word
             foreach (char c in input)
             {
-                if (isInAsciiAlphabet(c))
+                if (isInGermanAlphabet(c))
                 {
                     continue;
                 }
@@ -267,10 +309,10 @@ namespace synonym_finder
         {
             if ((c >= 65 && c <= 90) ||     // capital letters
                 (c >= 97 && c <= 122) ||    // small letters
-                c == 228 || c == 196 ||     // ä, Ä
-                c == 246 || c == 214 ||     // ö, Ö
-                c == 252 || c == 220 ||     // ü, Ü
-                c == 223)                   // ß
+                c == 'ä' || c == 'Ä' ||     // ä, Ä
+                c == 'ö' || c == 'Ö' ||     // ö, Ö
+                c == 'ü' || c == 'Ü' ||     // ü, Ü
+                c == 'ß')                   // ß
             {
                 return true;
             }
