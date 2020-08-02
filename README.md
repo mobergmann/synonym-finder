@@ -21,7 +21,7 @@ Klicken sie [hier](https://raw.githubusercontent.com/mobergmann/synonym-finder/m
 
 # Anleitung
 
-## Voraussetzungen
+## Voraussetzungen (Nur Version ≤ Patch 3)
 Installieren sie die folgende Abhängigkeit für ihr Betriebssystem, oder stellen sie sicher, das sie die Anhängigkeit installiert haben.
 
 Min. Version | OS | Link
@@ -39,15 +39,16 @@ Min. Version | OS | Link
 1. Entpacken sie die `.zip`, oder die `.tar` Datei an dem gewünschten installations Ort.
 
 ## Ausführen
-### Methode 1
-1. Öffnen sie den Ordner und führen sie die `.exe` Datei aus
+### Windows
+1. Öffnen sie den Installationsordner
+2. Führen sie die `.exe` aus
 
-### Methode 2
+### Linux
 1. Öffnen sie ein Terminal
 2. `cd` in das Verzeichnis, welches sie entpackt haben.
 3. Führen sie das Programm aus durch:
-  - `dotnet synonym-finder.dll` oder
-  - `dotnet synonym-finder.exe`
+  - `./synonym-finder` (≥ Patch 4)
+  - `dotnet synonym-finder.dll` (≤ Patch 3)
 
 # Vorschläge
 Fügen sie den Pfad zur .exe und .dll zu ihrem Path hinzu, sodass sie von überall aus die Synonymsuche zu starten.
